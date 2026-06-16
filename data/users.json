@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Chandler Bing",
+    "email": "cb@gmail.com",
+    "password": "cb@1234",
+    "roleId": "1",
+    "projectId": "2"
+  },
+  {
+    "name": "Monica Geller",
+    "email": "mg@gmail.com",
+    "password": "mg@1234",
+    "roleId": "2",
+    "projectId": "3"
+  }
+]
