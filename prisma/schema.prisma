@@ -4,8 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -40,7 +39,7 @@ model User{
   originalPassword String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  active Boolean
+  active Boolean @default(true)
 
   roleId String
   role Role @relation(fields: [roleId], references: [id])
@@ -52,25 +51,32 @@ model User{
   assignee Ticket[] @relation("TicketAssignee")
 }
 
-model Role{
+model Role {
   id String @id @default(uuid())
   title String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  active Boolean
+  active Boolean @default(true)
 
-  permissions Permissions[]
+  permissions RolePermission[]
   user User[]
 }
 
-model Permissions{
+model Permission {
   id String @id @default(uuid())
   name String @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  active Boolean
+  active Boolean @default(true)
 
-  role Role[]
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId String
+  permissionId String
+  active Boolean @default(true)
+
+  role Role @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
 }
 
 model Project{

@@ -3,11 +3,12 @@ import type { NextFunction, Response, Request } from 'express';
 import path from 'path';
 import { logEvents } from './middleware/logEvents';
 import cors from 'cors';
-import type { CorsOptions } from 'cors';
 import { errorHandler } from './middleware/errorHandler';
 import { router } from './routes/root';
 import { userRouter } from './routes/api/users';
 import { corsOption } from '../config/corsOptions'
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -22,6 +23,8 @@ app.use(cors(corsOption));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
+app.use('/flowbit',swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/', router);
 app.use('/users', userRouter);
