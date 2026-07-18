@@ -1,13 +1,16 @@
-import express from 'express';
-import { removeUser, getAllUsers, getUser, postUser, patchUser } from '../../controllers/usersController';
-import { authenticateJWT } from '../../middleware/authMiddleware';
-import { requirePermission } from '../../middleware/rbacMiddleware';
-
-export const userRouter = express.Router();
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const usersController_1 = require("../../controllers/usersController");
+const authMiddleware_1 = require("../../middleware/authMiddleware");
+const rbacMiddleware_1 = require("../../middleware/rbacMiddleware");
+exports.userRouter = express_1.default.Router();
 // Apply JWT authentication to all user routes
-userRouter.use(authenticateJWT);
-
+exports.userRouter.use(authMiddleware_1.authenticateJWT);
 /**
  * @swagger
  * /users:
@@ -43,8 +46,7 @@ userRouter.use(authenticateJWT);
  *       403:
  *         description: Forbidden
  */
-userRouter.route('/').get(requirePermission('read:user'), getAllUsers);
-
+exports.userRouter.route('/').get((0, rbacMiddleware_1.requirePermission)('read:user'), usersController_1.getAllUsers);
 /**
  * @swagger
  * /users:
@@ -85,8 +87,7 @@ userRouter.route('/').get(requirePermission('read:user'), getAllUsers);
  *       403:
  *         description: Forbidden
  */
-userRouter.route('/').post(requirePermission('create:user'), postUser);
-
+exports.userRouter.route('/').post((0, rbacMiddleware_1.requirePermission)('create:user'), usersController_1.postUser);
 /**
  * @swagger
  * /users/{id}:
@@ -112,8 +113,7 @@ userRouter.route('/').post(requirePermission('create:user'), postUser);
  *       404:
  *         description: User not found
  */
-userRouter.route('/:id').get(requirePermission('read:user'), getUser);
-
+exports.userRouter.route('/:id').get((0, rbacMiddleware_1.requirePermission)('read:user'), usersController_1.getUser);
 /**
  * @swagger
  * /users/{id}:
@@ -154,8 +154,7 @@ userRouter.route('/:id').get(requirePermission('read:user'), getUser);
  *       404:
  *         description: User not found
  */
-userRouter.route('/:id').patch(requirePermission('update:user'), patchUser);
-
+exports.userRouter.route('/:id').patch((0, rbacMiddleware_1.requirePermission)('update:user'), usersController_1.patchUser);
 /**
  * @swagger
  * /users/{id}:
@@ -181,4 +180,4 @@ userRouter.route('/:id').patch(requirePermission('update:user'), patchUser);
  *       404:
  *         description: User not found
  */
-userRouter.route('/:id').delete(requirePermission('delete:user'), removeUser);
+exports.userRouter.route('/:id').delete((0, rbacMiddleware_1.requirePermission)('delete:user'), usersController_1.removeUser);

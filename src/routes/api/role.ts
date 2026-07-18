@@ -1,20 +1,26 @@
 import express from 'express';
-import { removeUser, getAllUsers, getUser, postUser, patchUser } from '../../controllers/usersController';
+import {
+  removeRole,
+  getAllRoles,
+  getRole,
+  postRole,
+  patchRole
+} from '../../controllers/rolesController';
 import { authenticateJWT } from '../../middleware/authMiddleware';
 import { requirePermission } from '../../middleware/rbacMiddleware';
 
-export const userRouter = express.Router();
+export const roleRouter = express.Router();
 
-// Apply JWT authentication to all user routes
-userRouter.use(authenticateJWT);
+// Apply JWT authentication to all role routes
+roleRouter.use(authenticateJWT);
 
 /**
  * @swagger
- * /users:
+ * /roles:
  *   get:
- *     summary: Get All Users
+ *     summary: Get All Roles
  *     tags:
- *       - Users
+ *       - Roles
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -43,15 +49,15 @@ userRouter.use(authenticateJWT);
  *       403:
  *         description: Forbidden
  */
-userRouter.route('/').get(requirePermission('read:user'), getAllUsers);
+roleRouter.route('/').get(requirePermission('read:role'), getAllRoles);
 
 /**
  * @swagger
- * /users:
+ * /roles:
  *   post:
- *     summary: Create user
+ *     summary: Create Role
  *     tags:
- *       - Users
+ *       - Roles
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -61,39 +67,27 @@ userRouter.route('/').get(requirePermission('read:user'), getAllUsers);
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - email
- *               - password
- *               - roleId
- *               - projectId
+ *               - title
  *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               roleId:
- *                 type: string
- *               projectId:
+ *               title:
  *                 type: string
  *     responses:
  *       201:
- *         description: User created successfully
+ *         description: Role created successfully
  *       401:
  *         description: Unauthorized
  *       403:
  *         description: Forbidden
  */
-userRouter.route('/').post(requirePermission('create:user'), postUser);
+roleRouter.route('/').post(requirePermission('create:role'), postRole);
 
 /**
  * @swagger
- * /users/{id}:
+ * /roles/{id}:
  *   get:
- *     summary: Get user details
+ *     summary: Get Role
  *     tags:
- *       - Users
+ *       - Roles
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -104,23 +98,23 @@ userRouter.route('/').post(requirePermission('create:user'), postUser);
  *           type: string
  *     responses:
  *       200:
- *         description: User retrieved successfully
+ *         description: Role retrieved successfully
  *       401:
  *         description: Unauthorized
  *       403:
  *         description: Forbidden
  *       404:
- *         description: User not found
+ *         description: Role not found
  */
-userRouter.route('/:id').get(requirePermission('read:user'), getUser);
+roleRouter.route('/:id').get(requirePermission('read:role'), getRole);
 
 /**
  * @swagger
- * /users/{id}:
+ * /roles/{id}:
  *   patch:
- *     summary: Update user
+ *     summary: Update Role
  *     tags:
- *       - Users
+ *       - Roles
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -130,39 +124,35 @@ userRouter.route('/:id').get(requirePermission('read:user'), getUser);
  *         schema:
  *           type: string
  *     requestBody:
- *       required: false
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               title:
  *                 type: string
- *               email:
- *                 type: string
- *               roleId:
- *                 type: string
- *               projectId:
- *                 type: string
+ *               active:
+ *                 type: boolean
  *     responses:
  *       200:
- *         description: User updated successfully
+ *         description: Role updated successfully
  *       401:
  *         description: Unauthorized
  *       403:
  *         description: Forbidden
  *       404:
- *         description: User not found
+ *         description: Role not found
  */
-userRouter.route('/:id').patch(requirePermission('update:user'), patchUser);
+roleRouter.route('/:id').patch(requirePermission('update:role'), patchRole);
 
 /**
  * @swagger
- * /users/{id}:
+ * /roles/{id}:
  *   delete:
- *     summary: Delete user (soft delete)
+ *     summary: Delete Role (soft delete)
  *     tags:
- *       - Users
+ *       - Roles
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -173,12 +163,12 @@ userRouter.route('/:id').patch(requirePermission('update:user'), patchUser);
  *           type: string
  *     responses:
  *       200:
- *         description: User deleted successfully
+ *         description: Role deleted successfully
  *       401:
  *         description: Unauthorized
  *       403:
  *         description: Forbidden
  *       404:
- *         description: User not found
+ *         description: Role not found
  */
-userRouter.route('/:id').delete(requirePermission('delete:user'), removeUser);
+roleRouter.route('/:id').delete(requirePermission('delete:role'), removeRole);

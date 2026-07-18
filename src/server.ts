@@ -6,6 +6,10 @@ import cors from 'cors';
 import { errorHandler } from './middleware/errorHandler';
 import { router } from './routes/root';
 import { userRouter } from './routes/api/users';
+import { roleRouter } from './routes/api/role';
+import { authRouter } from './routes/api/auth';
+import { projectsRouter } from './routes/api/projects';
+import { ticketsRouter } from './routes/api/tickets';
 import { corsOption } from '../config/corsOptions'
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swagger';
@@ -24,18 +28,22 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-app.use('/flowbit',swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Swagger documentation route
+app.use('/flowbit', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Base root and static routes
 app.use('/', router);
-app.use('/users', userRouter);
-
 app.use(express.static(path.join('D:/Training_and_Practice/Projects/FlowBit/backend', '/public')));
 
-app.use(errorHandler);
+// API routes
+app.use('/auth', authRouter);
+app.use('/users', userRouter);
+app.use('/roles', roleRouter);
+app.use('/projects', projectsRouter);
+app.use('/tickets', ticketsRouter);
 
-// app.use((request: Request, response: Response, next: NextFunction)=>{
-//   response.send("......of to Google");
-// })
+// Global Error Handler Middleware
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Running On Port: ${PORT}`);
