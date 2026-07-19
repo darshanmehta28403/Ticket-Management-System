@@ -44,8 +44,8 @@ const getRoles = async (req, res) => {
 exports.getRoles = getRoles;
 const getRoleById = async (req, res) => {
     let id = req.params.id;
-    return await db.role.findUnique({
-        where: { id },
+    return await db.role.findFirst({
+        where: { id, active: true },
         include: {
             permissions: {
                 include: {
@@ -58,6 +58,9 @@ const getRoleById = async (req, res) => {
 exports.getRoleById = getRoleById;
 const createRole = async (req, res) => {
     let role = req.body;
+    if (!role.title || typeof role.title !== 'string') {
+        throw new Error('Role title is required');
+    }
     return await db.role.create({
         data: {
             title: role.title,
@@ -85,6 +88,10 @@ const updateRole = async (req, res) => {
 exports.updateRole = updateRole;
 const deleteRole = async (req, res) => {
     let id = req.params.id;
+    const role = await db.role.findUnique({ where: { id } });
+    if (!role || !role.active) {
+        throw new Error('Role Not Found');
+    }
     return await db.role.update({
         where: { id },
         data: { active: false }

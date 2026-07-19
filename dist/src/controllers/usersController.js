@@ -31,7 +31,8 @@ let postUser = async (req, res) => {
         return res.status(201).json(data);
     }
     catch (error) {
-        return res.status(500).json({ message: error.message || "Failed to create user." });
+        const status = error.message?.includes('required') || error.message?.includes('already exists') ? 400 : 500;
+        return res.status(status).json({ message: error.message || "Failed to create user." });
     }
 };
 exports.postUser = postUser;
@@ -52,7 +53,8 @@ let removeUser = async (req, res) => {
         return res.status(200).json({ message: "User deleted successfully.", user: data });
     }
     catch (error) {
-        return res.status(500).json({ message: error.message || "Failed to delete user." });
+        const status = error.message === 'User Not Found' || error.code === 'P2025' ? 404 : 500;
+        return res.status(status).json({ message: error.message || "Failed to delete user." });
     }
 };
 exports.removeUser = removeUser;

@@ -1,0 +1,37 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
+const cors_1 = __importDefault(require("cors"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const logEvents_1 = require("./middleware/logEvents");
+const errorHandler_1 = require("./middleware/errorHandler");
+const root_1 = require("./routes/root");
+const users_1 = require("./routes/api/users");
+const role_1 = require("./routes/api/role");
+const auth_1 = require("./routes/api/auth");
+const projects_1 = require("./routes/api/projects");
+const tickets_1 = require("./routes/api/tickets");
+const corsOptions_1 = require("../config/corsOptions");
+const swagger_1 = require("./swagger");
+exports.app = (0, express_1.default)();
+exports.app.use((req, _res, next) => {
+    (0, logEvents_1.logEvents)(`${req.method}\t${req.headers.origin ?? '-'}\t${req.url}`, 'reqLog.txt');
+    next();
+});
+exports.app.use((0, cors_1.default)(corsOptions_1.corsOption));
+exports.app.use(express_1.default.urlencoded({ extended: true }));
+exports.app.use(express_1.default.json());
+exports.app.use('/flowbit', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
+exports.app.use(express_1.default.static(path_1.default.join(process.cwd(), 'public')));
+exports.app.use('/', root_1.router);
+exports.app.use('/auth', auth_1.authRouter);
+exports.app.use('/users', users_1.userRouter);
+exports.app.use('/roles', role_1.roleRouter);
+exports.app.use('/projects', projects_1.projectsRouter);
+exports.app.use('/tickets', tickets_1.ticketsRouter);
+exports.app.use(errorHandler_1.errorHandler);

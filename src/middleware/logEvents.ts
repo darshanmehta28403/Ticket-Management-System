@@ -10,10 +10,11 @@ export const logEvents = async (message: string, logName: string) => {
   const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
   try {
-    if(!fs.existsSync(path.join('D:/Training_and_Practice/Projects/FlowBit/backend','src/','logs'))){
-      await fsPromise.mkdir(path.join('D:/Training_and_Practice/Projects/FlowBit/backend','src/','logs'));
+    const logsDirectory = path.join(process.cwd(), 'src', 'logs');
+    if(!fs.existsSync(logsDirectory)){
+      await fsPromise.mkdir(logsDirectory, { recursive: true });
     }
-    await fsPromise.appendFile(path.join('D:/Training_and_Practice/Projects/FlowBit/backend','/src','logs',logName), logItem);
+    await fsPromise.appendFile(path.join(logsDirectory, logName), logItem);
   } catch (error) {
     console.log(error);
   }

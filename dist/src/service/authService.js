@@ -48,7 +48,6 @@ const registerUser = async (req, res) => {
                 name,
                 email,
                 password: hashedPassword,
-                originalPassword: password,
                 roleId: finalRoleId,
                 projectId: finalProjectId,
                 active: true

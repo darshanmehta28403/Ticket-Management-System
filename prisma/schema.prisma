@@ -34,9 +34,8 @@ enum Priority{
 model User{
   id String @id @default(uuid())
   name String
-  email String
+  email String @unique
   password String
-  originalPassword String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   active Boolean @default(true)
@@ -95,7 +94,7 @@ model Ticket{
   id String @id @default(uuid())
   title String
   description String
-  ticketNumber String
+  ticketNumber String @unique
   status Status
   priority Priority
   createdAt DateTime @default(now())

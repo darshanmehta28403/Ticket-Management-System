@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 let db = prisma;
 
 export const getUsers = async (req: any, res: any) => {
-  let skip = Number(req.query.skip) || 0;
-  let limit = Number(req.query.limit) || 10;
+  let skip = Math.max(0, Number(req.query.skip) || 0);
+  let limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
   let searchString = req.query.searchString || '';
   let sortBy = req.query.sortBy || 'createdAt';
   let sortOrder = req.query.sortOrder || 'asc';
@@ -38,10 +38,7 @@ export const getUsers = async (req: any, res: any) => {
     },
     skip: skip,
     take: limit,
-    include: {
-      role: true,
-      project: true
-    }
+    select: userSelect
   });
 
   const totalCount = await db.user.count({ where });
@@ -51,17 +48,21 @@ export const getUsers = async (req: any, res: any) => {
 
 export const getUserById = async (req: any, res: any) => {
   let id = req.params.id;
-  return await db.user.findUnique({
-    where: { id },
-    include: {
-      role: true,
-      project: true
-    }
+  return await db.user.findFirst({
+    where: { id, active: true },
+    select: userSelect
   });
 }
 
 export const createUser = async (req: any, res: any) => {
   let user = req.body;
+  if (!user.name || !user.email || !user.password || !user.roleId || !user.projectId) {
+    throw new Error('Name, email, password, roleId and projectId are required');
+  }
+  const existingUser = await db.user.findFirst({ where: { email: user.email } });
+  if (existingUser) {
+    throw new Error('A user with this email already exists');
+  }
   let hashedPassword = await bcrypt.hash(user.password, 10);
   
   // Exclude roleId and projectId from direct copy if we want to build schema safely
@@ -69,7 +70,6 @@ export const createUser = async (req: any, res: any) => {
     name: user.name,
     email: user.email,
     password: hashedPassword,
-    originalPassword: user.password,
     roleId: user.roleId,
     projectId: user.projectId,
     active: true
@@ -77,21 +77,22 @@ export const createUser = async (req: any, res: any) => {
 
   return await db.user.create({
     data: newUser,
-    include: {
-      role: true,
-      project: true
-    }
+    select: userSelect
   });
 }
 
 export const updateUser = async (req: any, res: any) => {
   let id = req.params.id;
   let userExists = await db.user.findUnique({
-    where: { id }
+    where: { id, active: true }
   });
   
   if (!userExists) {
     throw new Error('User Not Found');
+  }
+
+  if (req.body.password) {
+    req.body.password = await bcrypt.hash(req.body.password, 10);
   }
 
   const updateData = Object.fromEntries(
@@ -106,17 +107,29 @@ export const updateUser = async (req: any, res: any) => {
   return await db.user.update({
     where: { id }, 
     data: updateData,
-    include: {
-      role: true,
-      project: true
-    }
+    select: userSelect
   });
 }
 
 export const deleteUser = async (req: any, res: any) => {
   let id = req.params.id;
+  const user = await db.user.findFirst({ where: { id, active: true } });
+  if (!user) {
+    throw new Error('User Not Found');
+  }
   return await db.user.update({
     where: { id }, 
     data: { active: false }
   });
 }
+
+const userSelect = {
+  id: true,
+  name: true,
+  email: true,
+  active: true,
+  createdAt: true,
+  updatedAt: true,
+  role: true,
+  project: true,
+} as const;

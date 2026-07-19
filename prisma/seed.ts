@@ -195,7 +195,6 @@ async function main() {
           name: u.name,
           email: u.email,
           password: hashedPassword,
-          originalPassword: u.password,
           roleId: dbRoles[u.roleTitle].id,
           projectId: u.projectId,
           active: true
@@ -208,7 +207,6 @@ async function main() {
         where: { id: existingUser.id },
         data: {
           password: hashedPassword,
-          originalPassword: u.password,
           roleId: dbRoles[u.roleTitle].id,
           projectId: u.projectId,
         }

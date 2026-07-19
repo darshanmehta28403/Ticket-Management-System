@@ -48,8 +48,8 @@ export const getProjects = async (req: any, res: any) => {
 export const getProjectById = async (req: any, res: any) => {
   try {
     const { id } = req.params;
-    const project = await prisma.project.findUnique({
-      where: { id }
+    const project = await prisma.project.findFirst({
+      where: { id, active: true }
     });
 
     if (!project) {
@@ -87,8 +87,8 @@ export const createProject = async (req: any, res: any) => {
 export const updateProject = async (req: any, res: any) => {
   try {
     const { id } = req.params;
-    const projectExists = await prisma.project.findUnique({
-      where: { id }
+    const projectExists = await prisma.project.findFirst({
+      where: { id, active: true }
     });
 
     if (!projectExists) {
@@ -115,8 +115,8 @@ export const updateProject = async (req: any, res: any) => {
 export const deleteProject = async (req: any, res: any) => {
   try {
     const { id } = req.params;
-    const projectExists = await prisma.project.findUnique({
-      where: { id }
+    const projectExists = await prisma.project.findFirst({
+      where: { id, active: true }
     });
 
     if (!projectExists) {

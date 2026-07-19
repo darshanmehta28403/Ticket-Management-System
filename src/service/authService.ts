@@ -50,7 +50,6 @@ export const registerUser = async (req: any, res: any) => {
         name,
         email,
         password: hashedPassword,
-        originalPassword: password,
         roleId: finalRoleId,
         projectId: finalProjectId,
         active: true
