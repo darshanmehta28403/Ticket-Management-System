@@ -1,4 +1,4 @@
-import { prisma } from "../../model/prisma";
+import { prisma } from "../../Backend/model/prisma";
 import type { Status, Priority } from "@prisma/client";
 
 // --- Tickets CRUD ---

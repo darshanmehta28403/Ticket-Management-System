@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../../model/prisma";
+import { prisma } from "../../Backend/model/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "flowbit_jwt_secret_key";
 

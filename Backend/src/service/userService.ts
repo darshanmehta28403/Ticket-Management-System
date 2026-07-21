@@ -1,4 +1,4 @@
-import { prisma } from "../../model/prisma";
+import { prisma } from "../../Backend/model/prisma";
 import bcrypt from 'bcrypt';
 
 let db = prisma;
