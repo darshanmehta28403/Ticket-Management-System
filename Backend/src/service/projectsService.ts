@@ -1,4 +1,4 @@
-import { prisma } from "../../Backend/model/prisma";
+import { prisma } from "../../model/prisma";
 
 export const getProjects = async (req: any, res: any) => {
   try {

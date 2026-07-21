@@ -29,6 +29,8 @@ async function main() {
     // Comment permissions
     "create:comment",
     "read:comment",
+    "update:comment",
+    "delete:comment",
     // File permissions
     "create:file",
     "read:file"
@@ -93,6 +95,8 @@ async function main() {
     "read:user",
     "create:comment",
     "read:comment",
+    "update:comment",
+    "delete:comment",
     "create:file",
     "read:file"
   ];
@@ -122,6 +126,8 @@ async function main() {
     "read:project",
     "create:comment",
     "read:comment",
+    "update:comment",
+    "delete:comment",
     "create:file",
     "read:file"
   ];

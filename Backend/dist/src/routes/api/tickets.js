@@ -293,6 +293,9 @@ exports.ticketsRouter.route("/:id/comments")
      *         description: Ticket not found
      */
     .post((0, rbacMiddleware_1.requirePermission)("create:comment"), ticketsController_1.postComment);
+exports.ticketsRouter.route("/:id/comments/:commentId")
+    .patch((0, rbacMiddleware_1.requirePermission)("update:comment"), ticketsController_1.patchComment)
+    .delete((0, rbacMiddleware_1.requirePermission)("delete:comment"), ticketsController_1.removeComment);
 // --- Files on Tickets ---
 exports.ticketsRouter.route("/:id/files")
     /**

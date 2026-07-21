@@ -7,8 +7,19 @@ export type Ticket = {
   description: string;
   status: string;
   priority: string;
-  project: { name: string };
-  assignee: { name: string };
+  createdAt: string;
+  updatedAt: string;
+  project: { id: string; name: string };
+  assignee: { id: string; name: string };
+  creator?: { id: string; name: string };
+};
+
+export type Comment = {
+  id: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  author?: { id: string; name: string; email: string };
 };
 
 export type User = {

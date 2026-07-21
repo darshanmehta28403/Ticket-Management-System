@@ -48,6 +48,7 @@ model User{
 
   creator Ticket[] @relation("TicketCreator")
   assignee Ticket[] @relation("TicketAssignee")
+  comments Comment[] @relation("CommentAuthor")
 }
 
 model Role {
@@ -133,4 +134,7 @@ model Comment{
 
   ticketId String
   ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  authorId String
+  author User @relation("CommentAuthor", fields: [authorId], references: [id])
 }

@@ -1,4 +1,4 @@
-import { prisma } from "../../Backend/model/prisma";
+import { prisma } from "../../model/prisma";
 import bcrypt from 'bcrypt';
 
 let db = prisma;
@@ -84,7 +84,7 @@ export const createUser = async (req: any, res: any) => {
 export const updateUser = async (req: any, res: any) => {
   let id = req.params.id;
   let userExists = await db.user.findUnique({
-    where: { id, active: true }
+    where: { id },
   });
   
   if (!userExists) {

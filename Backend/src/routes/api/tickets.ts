@@ -7,6 +7,8 @@ import {
   removeTicket,
   getComments,
   postComment,
+  patchComment,
+  removeComment,
   getFiles,
   postFile
 } from "../../controllers/ticketsController";
@@ -302,6 +304,10 @@ ticketsRouter.route("/:id/comments")
    *         description: Ticket not found
    */
   .post(requirePermission("create:comment"), postComment);
+
+ticketsRouter.route("/:id/comments/:commentId")
+  .patch(requirePermission("update:comment"), patchComment)
+  .delete(requirePermission("delete:comment"), removeComment);
 
 // --- Files on Tickets ---
 ticketsRouter.route("/:id/files")

@@ -82,7 +82,7 @@ exports.createUser = createUser;
 const updateUser = async (req, res) => {
     let id = req.params.id;
     let userExists = await db.user.findUnique({
-        where: { id, active: true }
+        where: { id },
     });
     if (!userExists) {
         throw new Error('User Not Found');

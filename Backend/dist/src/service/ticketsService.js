@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createTicketFile = exports.getTicketFiles = exports.createTicketComment = exports.getTicketComments = exports.deleteTicket = exports.updateTicket = exports.createTicket = exports.getTicketById = exports.getTickets = void 0;
+exports.createTicketFile = exports.getTicketFiles = exports.deleteTicketComment = exports.updateTicketComment = exports.createTicketComment = exports.getTicketComments = exports.deleteTicket = exports.updateTicket = exports.createTicket = exports.getTicketById = exports.getTickets = void 0;
 const prisma_1 = require("../../model/prisma");
 // --- Tickets CRUD ---
 const getTickets = async (req, res) => {
     try {
-        const skip = Number(req.query.skip) || 0;
-        const limit = Number(req.query.limit) || 10;
+        const skip = Math.max(0, Number(req.query.skip) || 0);
+        const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
         const searchString = req.query.searchString || "";
         const status = req.query.status;
         const priority = req.query.priority;
         const projectId = req.query.projectId || "";
-        const sortBy = req.query.sortBy || "createdAt";
-        const sortOrder = req.query.sortOrder || "desc";
+        const sortBy = ["createdAt", "updatedAt", "priority", "status", "ticketNumber"].includes(req.query.sortBy) ? req.query.sortBy : "createdAt";
+        const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
         let where = { active: true };
         if (searchString) {
             where.OR = [
@@ -91,6 +91,7 @@ const getTicketById = async (req, res) => {
                 comments: {
                     where: { active: true },
                     orderBy: { createdAt: "desc" },
+                    include: { author: { select: { id: true, name: true, email: true } } },
                 },
                 files: {
                     where: { active: true },
@@ -235,6 +236,7 @@ const getTicketComments = async (req, res) => {
         const comments = await prisma_1.prisma.comment.findMany({
             where: { ticketId, active: true },
             orderBy: { createdAt: "desc" },
+            include: { author: { select: { id: true, name: true, email: true } } },
         });
         return res.status(200).json(comments);
     }
@@ -246,7 +248,7 @@ exports.getTicketComments = getTicketComments;
 const createTicketComment = async (req, res) => {
     try {
         const { id: ticketId } = req.params;
-        const { description } = req.body;
+        const description = typeof req.body.description === "string" ? req.body.description.trim() : "";
         if (!description) {
             return res.status(400).json({ message: "Description is required for comments." });
         }
@@ -259,6 +261,7 @@ const createTicketComment = async (req, res) => {
             data: {
                 description,
                 ticketId,
+                authorId: req.user.id,
                 active: true,
             },
         });
@@ -269,6 +272,38 @@ const createTicketComment = async (req, res) => {
     }
 };
 exports.createTicketComment = createTicketComment;
+const updateTicketComment = async (req, res) => {
+    try {
+        const description = typeof req.body.description === "string" ? req.body.description.trim() : "";
+        if (!description)
+            return res.status(400).json({ message: "Description is required for comments." });
+        const comment = await prisma_1.prisma.comment.findFirst({ where: { id: req.params.commentId, ticketId: req.params.id, active: true } });
+        if (!comment)
+            return res.status(404).json({ message: "Comment not found." });
+        if (comment.authorId !== req.user.id && req.user.role !== "ADMIN")
+            return res.status(403).json({ message: "You can only edit your own comments." });
+        return res.status(200).json(await prisma_1.prisma.comment.update({ where: { id: comment.id }, data: { description } }));
+    }
+    catch (error) {
+        return res.status(500).json({ message: error.message || "Failed to update comment." });
+    }
+};
+exports.updateTicketComment = updateTicketComment;
+const deleteTicketComment = async (req, res) => {
+    try {
+        const comment = await prisma_1.prisma.comment.findFirst({ where: { id: req.params.commentId, ticketId: req.params.id, active: true } });
+        if (!comment)
+            return res.status(404).json({ message: "Comment not found." });
+        if (comment.authorId !== req.user.id && req.user.role !== "ADMIN")
+            return res.status(403).json({ message: "You can only delete your own comments." });
+        await prisma_1.prisma.comment.update({ where: { id: comment.id }, data: { active: false } });
+        return res.status(200).json({ message: "Comment deleted successfully." });
+    }
+    catch (error) {
+        return res.status(500).json({ message: error.message || "Failed to delete comment." });
+    }
+};
+exports.deleteTicketComment = deleteTicketComment;
 // --- Files on Tickets ---
 const getTicketFiles = async (req, res) => {
     try {

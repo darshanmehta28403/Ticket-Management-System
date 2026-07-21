@@ -1,18 +1,18 @@
-import { prisma } from "../../Backend/model/prisma";
+import { prisma } from "../../model/prisma";
 import type { Status, Priority } from "@prisma/client";
 
 // --- Tickets CRUD ---
 
 export const getTickets = async (req: any, res: any) => {
   try {
-    const skip = Number(req.query.skip) || 0;
-    const limit = Number(req.query.limit) || 10;
+    const skip = Math.max(0, Number(req.query.skip) || 0);
+    const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
     const searchString = req.query.searchString || "";
     const status = req.query.status as Status | undefined;
     const priority = req.query.priority as Priority | undefined;
     const projectId = req.query.projectId || "";
-    const sortBy = req.query.sortBy || "createdAt";
-    const sortOrder = req.query.sortOrder || "desc";
+    const sortBy = ["createdAt", "updatedAt", "priority", "status", "ticketNumber"].includes(req.query.sortBy) ? req.query.sortBy : "createdAt";
+    const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
 
     let where: any = { active: true };
 
@@ -98,6 +98,7 @@ export const getTicketById = async (req: any, res: any) => {
         comments: {
           where: { active: true },
           orderBy: { createdAt: "desc" },
+          include: { author: { select: { id: true, name: true, email: true } } },
         },
         files: {
           where: { active: true },
@@ -262,6 +263,7 @@ export const getTicketComments = async (req: any, res: any) => {
     const comments = await prisma.comment.findMany({
       where: { ticketId, active: true },
       orderBy: { createdAt: "desc" },
+      include: { author: { select: { id: true, name: true, email: true } } },
     });
 
     return res.status(200).json(comments);
@@ -273,7 +275,7 @@ export const getTicketComments = async (req: any, res: any) => {
 export const createTicketComment = async (req: any, res: any) => {
   try {
     const { id: ticketId } = req.params;
-    const { description } = req.body;
+    const description = typeof req.body.description === "string" ? req.body.description.trim() : "";
 
     if (!description) {
       return res.status(400).json({ message: "Description is required for comments." });
@@ -289,6 +291,7 @@ export const createTicketComment = async (req: any, res: any) => {
       data: {
         description,
         ticketId,
+        authorId: req.user.id,
         active: true,
       },
     });
@@ -296,6 +299,34 @@ export const createTicketComment = async (req: any, res: any) => {
     return res.status(201).json(newComment);
   } catch (error: any) {
     return res.status(500).json({ message: error.message || "Failed to create comment." });
+  }
+};
+
+export const updateTicketComment = async (req: any, res: any) => {
+  try {
+    const description = typeof req.body.description === "string" ? req.body.description.trim() : "";
+    if (!description) return res.status(400).json({ message: "Description is required for comments." });
+
+    const comment = await prisma.comment.findFirst({ where: { id: req.params.commentId, ticketId: req.params.id, active: true } });
+    if (!comment) return res.status(404).json({ message: "Comment not found." });
+    if (comment.authorId !== req.user.id && req.user.role !== "ADMIN") return res.status(403).json({ message: "You can only edit your own comments." });
+
+    return res.status(200).json(await prisma.comment.update({ where: { id: comment.id }, data: { description } }));
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message || "Failed to update comment." });
+  }
+};
+
+export const deleteTicketComment = async (req: any, res: any) => {
+  try {
+    const comment = await prisma.comment.findFirst({ where: { id: req.params.commentId, ticketId: req.params.id, active: true } });
+    if (!comment) return res.status(404).json({ message: "Comment not found." });
+    if (comment.authorId !== req.user.id && req.user.role !== "ADMIN") return res.status(403).json({ message: "You can only delete your own comments." });
+
+    await prisma.comment.update({ where: { id: comment.id }, data: { active: false } });
+    return res.status(200).json({ message: "Comment deleted successfully." });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message || "Failed to delete comment." });
   }
 };
 
