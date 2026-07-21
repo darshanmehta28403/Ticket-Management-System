@@ -106,25 +106,6 @@ Contains
 
 ---
 
-# 📸 Screenshots
-
-> Add screenshots or GIFs here.
-
-Example
-
-```
-Login Screen
-
-Dashboard
-
-Ticket List
-
-Ticket Details
-
-Admin Panel
-```
-
----
 
 # 🔑 Core Functionalities
 
