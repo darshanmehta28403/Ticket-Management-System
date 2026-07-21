@@ -1,0 +1,139 @@
+20260614	16:07:58	a82f2009-ee69-47aa-aa7b-e4607944227a	Error : Not allowed by CORS
+20260616	16:21:47	d99d3aa7-aade-40a1-be4a-da9da3e16540	TypeError : Cannot read properties of undefined (reading 'id')
+20260616	16:22:09	991f25e0-767f-4039-a156-19ec970343c9	TypeError : Cannot read properties of undefined (reading 'id')
+20260616	16:22:14	e7f88ed2-ee27-47dc-9bd0-c7234c90f750	TypeError : Cannot read properties of undefined (reading 'id')
+20260616	16:22:18	37d8e9bd-3933-46da-9e72-b1c6323c920d	TypeError : Cannot read properties of undefined (reading 'id')
+20260616	16:22:56	419c6a6c-927d-476a-b445-ed2249932ee0	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:24:11	6a3a2d40-3009-4ebc-96bb-5bee4e3cad7a	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:24:30	080e6dd9-dabe-48e6-90f2-fa02345a1215	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:25:01	efde0bf7-1f80-436f-a3fc-55b85508d937	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:27:02	97dc6772-2f02-43ae-8358-f08c69d99279	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:29:48	a58cf760-42ff-4e83-a55a-e883eb953b0d	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:29:49	17860ffe-e300-4ebf-8b35-5b9acb96f55b	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:29:50	2eed4b68-55d8-4ef6-ab6d-3153dba47a15	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	16:29:55	25c9fb84-3c97-498c-9495-b5cb73d00a0f	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	17:16:57	5ed33ccb-fe54-43a6-b59c-ca0f4444d52e	TypeError : Cannot read properties of undefined (reading 'name')
+20260616	17:17:24	95e159f6-e276-43ad-970e-e5eeaa04aed4	TypeError : Cannot read properties of undefined (reading 'email')
+20260621	23:34:15	cca1465b-9d80-4875-aaca-1241624cf442	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	16:52:35	04299496-f984-4fae-a5c4-72a705afe034	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	16:57:25	5a2c7897-f19c-4769-93f8-fa2792793ec8	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	16:57:28	5a670df0-5d98-41eb-af43-c07a774eb0f1	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	16:59:46	0ba5583c-48c2-4af6-9d46-23026e1d10bd	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:21	ccef5e1f-0d30-4eb4-ba30-05a1b471f231	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:26	84fa0d3f-6627-4ccd-865b-d376d9173212	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	5c686838-cd7d-4ca8-b600-758569f217e3	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	110f9beb-e80d-41ce-9a24-bc46e737669b	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	1fba382b-ed78-4857-8af1-e1e31cdb2aa2	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	bbc344d2-74ab-4b8c-aee1-64d5bbe8bcd8	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	7f87ce96-8fb9-472f-b599-5820777a2511	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:28	bad00953-cb94-4233-978c-6ed7266ad02c	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	25d79faf-20f5-463e-9406-6365433443d6	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	88dd1cc9-c2b0-4cc2-a4ed-5b28c823c856	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	e98f92f1-7546-47e1-b836-4f728a38f60c	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	c434500d-66e3-45d0-ba4f-d2c72b76fdcd	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	d2dca027-eda9-4b8a-9529-f232ce7d932f	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:29	63ff274e-7f29-4fbc-b07e-807353e33258	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	3c082a51-b0ee-4dc2-a0ac-53370b2d56c7	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	f846abbf-81e2-40f4-b050-e915bb30049f	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	0c3d6b6c-1e71-4e54-9c90-853e26bb66c3	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	b12ea022-c641-420d-8264-f1c6a6b3266b	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	cc4de4aa-9146-486f-b043-2837199fa37d	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	7e662b90-45ca-4569-ab0f-34bd81fa3fe4	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:30	594c6d55-a667-4fd3-918c-d9cd788644b4	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:03:31	190ba6c4-b490-462f-be32-c0d6e6ddee58	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:05:05	1435b08c-a4a4-431e-bea5-27829d26c0cf	TypeError : Cannot read properties of undefined (reading 'skip')
+20260622	17:05:51	a295086b-2ba7-4985-8eb8-8909b8a207a8	TypeError : Cannot read properties of undefined (reading 'searchString')
+20260622	17:06:02	ee259bdd-8f68-477c-9cb7-339fc7f888c5	Error : SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+20260622	17:06:09	6080b634-cf7d-4655-b184-52e392c84633	Error : SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+20260622	17:06:56	e4a8530a-b433-4c67-97e1-2d25e7224d65	Error : SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+20260622	17:12:28	697f49cf-de6d-4962-b499-10d697f01d2c	Error : SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+20260622	17:22:37	6945ce74-ee90-462d-b68a-70e231d908c7	Error : Not allowed by CORS
+20260622	18:18:17	f04f70b7-b7c6-4596-b8cc-3ce3e3cf4950	Error : Not allowed by CORS
+20260622	18:19:15	965142cc-e100-45a6-8151-72aa8b958a1e	PrismaClientValidationError : 
+Invalid `db.user.create()` invocation in
+D:\Training_and_Practice\Projects\FlowBit\backend\src\service\userService.ts:61:24
+
+  58 let newUser = Object.assign(user);
+  59 newUser.password = hashedPass;
+  60 newUser.originalPassword = user.password;
+→ 61 return await db.user.create({
+       name: "Chandler Bing",
+       ~~~~
+       email: "mrbing@gmail.com",
+       password: "$2b$10$6fcJ2WpMGRM2GluUa2Rp0.ae4JbTqr1KOHLVaUdRkj1uvTCe8HCDa",
+       roleId: "1",
+       projectId: "1",
+       originalPassword: "$2b$10$6fcJ2WpMGRM2GluUa2Rp0.ae4JbTqr1KOHLVaUdRkj1uvTCe8HCDa",
+     ? data?: UserCreateInput | UserUncheckedCreateInput
+     })
+
+Unknown argument `name`. Did you mean `data`? Available options are marked with ?.
+20260622	18:21:28	ef83f0d7-6ef3-4d0a-bf53-7fb4cf8ce541	PrismaClientValidationError : 
+Invalid `db.user.create()` invocation in
+D:\Training_and_Practice\Projects\FlowBit\backend\src\service\userService.ts:61:24
+
+  58 let newUser = Object.assign({}, user);
+  59 newUser.password = hashedPass;
+  60 newUser.originalPassword = user.password;
+→ 61 return await db.user.create({
+       data: {
+         name: "Chandler Bing",
+         email: "mrbing@gmail.com",
+         password: "$2b$10$t34S0pPjvCPz7QuKgV2mwuLbWKUN3MRtKE7Oyi5/enH4q2D4/jlym",
+         roleId: "1",
+         projectId: "1",
+         originalPassword: "mrbing@123",
+     +   active: Boolean
+       }
+     })
+
+Argument `active` is missing.
+20260622	18:25:27	8bf99a4d-267c-4e77-b199-10a186d036b3	PrismaClientValidationError : 
+Invalid `db.user.create()` invocation in
+D:\Training_and_Practice\Projects\FlowBit\backend\src\service\userService.ts:61:24
+
+  58 let newUser = Object.assign({}, user);
+  59 newUser.password = hashedPass;
+  60 newUser.originalPassword = user.password;
+→ 61 return await db.user.create({
+       data: {
+         name: "Chandler Bing",
+         email: "mrbing@gmail.com",
+         password: "$2b$10$SMnKePzfBdp6aVK7JXwUZOy43xoTR7H6MnKru9oWknKHsb/.x2bHW",
+         roleId: "1",
+         projectId: "1",
+         originalPassword: "mrbing@123",
+     +   active: Boolean
+       }
+     })
+
+Argument `active` is missing.
+20260622	18:30:07	fc6b5274-88e4-453a-b21f-5516d1de8754	PrismaClientValidationError : 
+Invalid `db.user.create()` invocation in
+D:\Training_and_Practice\Projects\FlowBit\backend\src\service\userService.ts:61:24
+
+  58 let newUser = Object.assign({}, user);
+  59 newUser.password = hashedPass;
+  60 newUser.originalPassword = user.password;
+→ 61 return await db.user.create({
+       data: {
+         name: "Chandler Bing",
+         email: "mrbing@gmail.com",
+         password: "$2b$10$OMjzSIjGgXS1vIBHxJl50OtHkzp/K6YQhU9DwZbh6wk.rerf9bAg6",
+         roleId: "1",
+         projectId: "1",
+         originalPassword: "mrbing@123",
+     +   active: Boolean
+       }
+     })
+
+Argument `active` is missing.
+20260622	18:41:30	d9e78f5d-2a14-41e4-a1e9-5583c5f847a2	PrismaClientKnownRequestError : 
+Invalid `db.user.create()` invocation in
+D:\Training_and_Practice\Projects\FlowBit\backend\src\service\userService.ts:61:24
+
+  58 let newUser = Object.assign({}, user);
+  59 newUser.password = hashedPass;
+  60 newUser.originalPassword = user.password;
+→ 61 return await db.user.create(
+Foreign key constraint violated on the constraint: `User_roleId_fkey`

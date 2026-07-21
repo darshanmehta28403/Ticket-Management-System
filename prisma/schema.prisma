@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Status {
+  IN_PROGRESS
+  NEED_INFORMATION
+  TO_DO
+  READY_FOR_UAT
+  READY_FOR_PROD
+  DEPLOYED
+  DONE
+  ON_HOLD
+  BACKLOG
+}
+
+enum Priority{
+  HIGHEST
+  HIGH
+  MEDIUM
+  LOW
+  LOWEST
+}
+
+model User{
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active Boolean @default(true)
+
+  roleId String
+  role Role @relation(fields: [roleId], references: [id])
+
+  projectId String
+  project Project @relation(fields: [projectId], references: [id])
+
+  creator Ticket[] @relation("TicketCreator")
+  assignee Ticket[] @relation("TicketAssignee")
+}
+
+model Role {
+  id String @id @default(uuid())
+  title String
+  active Boolean @default(true)
+
+  permissions RolePermission[]
+  user User[]
+}
+
+model Permission {
+  id String @id @default(uuid())
+  name String @unique
+  active Boolean @default(true)
+
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId String
+  permissionId String
+  active Boolean @default(true)
+
+  role Role @relation(fields: [roleId], references: [id])
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+model Project{
+  id String @id @default(uuid())
+  name String
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active Boolean
+
+  users User[]
+  ticket Ticket[]
+}
+
+model Ticket{
+  id String @id @default(uuid())
+  title String
+  description String
+  ticketNumber String @unique
+  status Status
+  priority Priority
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active Boolean
+
+  createdById String
+  creator User @relation("TicketCreator", fields: [createdById], references: [id])
+
+  assignedToId String
+  assignee User @relation("TicketAssignee", fields: [assignedToId], references: [id])
+
+  projectId String
+  project Project @relation(fields: [projectId], references: [id])
+
+  files File[]
+  comments Comment[]
+}
+
+model File{
+  id String @id @default(uuid())
+  title String
+  createdAt DateTime @default(now())
+  active Boolean
+
+  ticketId String
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+}
+
+model Comment{
+  id String @id @default(uuid())
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active Boolean
+
+  ticketId String
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+}
