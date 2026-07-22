@@ -1,0 +1,4 @@
+import { PRIORITIES, STATUSES } from '../constants.js';
+import { Select } from './Shared.jsx';
+
+export default function TicketFilters({ filters, projects, change, reset }) { return <section className="filters panel"><input aria-label="Search tickets" placeholder="Search tickets" value={filters.search} onChange={e => change('search', e.target.value)} /><Select label="" value={filters.status} values={STATUSES} empty="All statuses" onChange={value => change('status', value)} /><Select label="" value={filters.priority} values={PRIORITIES} empty="All priorities" onChange={value => change('priority', value)} /><select value={filters.projectId} onChange={e => change('projectId', e.target.value)}><option value="">All projects</option>{projects.map(project => <option value={project.id} key={project.id}>{project.name}</option>)}</select><button className="secondary" onClick={reset}>Reset</button></section>; }
